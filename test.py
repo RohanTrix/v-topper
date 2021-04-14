@@ -5,11 +5,14 @@ from PIL import Image
 import pandas as pd
 from pprint import pprint
 import base64
-from lib.parse import parse_captcha
+from lib.parser import parse_captcha
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from lib.upload import uploader
 from lib.DA_opener import open_DA
+from dotenv import load_dotenv
+load_dotenv()
+
 CAPTCHA_DIM = (180, 45)
 CHARACTER_DIM = (30, 32)
 FPATH = os.path.dirname(os.path.realpath(__file__))
@@ -32,7 +35,7 @@ def fill_form(driver,uname, passwd):
     img_name = 'assets/captcha.png'
     with open(img_name, 'wb') as f:
         f.write(img_data)
-    ocr_result = parse_captcha(Image.open(os.path.join(FPATH, "captcha.png")))
+    ocr_result = parse_captcha(Image.open(os.path.join(FPATH, 'assets/captcha.png')))
     print(ocr_result)
     driver.find_element_by_xpath("//*[@id='captchaCheck']").send_keys(ocr_result)
     driver.find_element_by_xpath("//*[@id='captcha']").click()
@@ -41,7 +44,7 @@ def fill_form(driver,uname, passwd):
 def check_login_success(driver):
     while 'value="19BCE0984"' not in driver.page_source:
         try:
-            fill_form(driver,os.getenv('USERNAME'), os.getenv('PASSWORD'))
+            fill_form(driver,os.getenv('user'), os.getenv('pass'))
             return False
         except:
             print("RELOAD")

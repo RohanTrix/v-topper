@@ -5,16 +5,16 @@ from PIL import Image
 import pandas as pd
 from pprint import pprint
 import base64
-from parse import parse_captcha
+from lib.parse import parse_captcha
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
-from upload import uploader
-from DA_opener import open_DA
+from lib.upload import uploader
+from lib.DA_opener import open_DA
 CAPTCHA_DIM = (180, 45)
 CHARACTER_DIM = (30, 32)
 FPATH = os.path.dirname(os.path.realpath(__file__))
 
-driver = webdriver.Edge('msedgedriver.exe')
+driver = webdriver.Edge('assets/msedgedriver.exe')
 driver.get("https://vtop.vit.ac.in/vtop/initialProcess")
 
 def escape_timeout_page(driver):
@@ -29,7 +29,7 @@ def fill_form(driver,uname, passwd):
     time.sleep(1)
     _,img_data = driver.find_element_by_xpath("//*[@id='captchaRefresh']/div/img").get_attribute("src").split(' ')
     img_data = base64.b64decode(img_data)
-    img_name = 'captcha.png'
+    img_name = 'assets/captcha.png'
     with open(img_name, 'wb') as f:
         f.write(img_data)
     ocr_result = parse_captcha(Image.open(os.path.join(FPATH, "captcha.png")))
@@ -41,7 +41,7 @@ def fill_form(driver,uname, passwd):
 def check_login_success(driver):
     while 'value="19BCE0984"' not in driver.page_source:
         try:
-            fill_form(driver,"19BCE0984", "Rohan@2001")
+            fill_form(driver,os.getenv('USERNAME'), os.getenv('PASSWORD'))
             return False
         except:
             print("RELOAD")

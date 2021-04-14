@@ -6,8 +6,9 @@ def uploader(driver, class_nbr):
     time.sleep(1)
     with open('temp.html', 'w+') as f:
         f.write(driver.page_source)
-    df = pd.read_html('temp.html')
-    print(df[1].iloc[2:,0:7])
+    df = pd.read_html('temp.html', header = 1, index_col = 0)
+    
+    #print(df[1].iloc[1:,0:7])
     
 
     

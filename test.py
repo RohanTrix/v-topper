@@ -32,10 +32,10 @@ def fill_form(driver,uname, passwd):
     time.sleep(1)
     _,img_data = driver.find_element_by_xpath("//*[@id='captchaRefresh']/div/img").get_attribute("src").split(' ')
     img_data = base64.b64decode(img_data)
-    img_name = 'assets/captcha.png'
+    img_name = 'lib\captcha.png'
     with open(img_name, 'wb') as f:
         f.write(img_data)
-    ocr_result = parse_captcha(Image.open(os.path.join(FPATH, 'assets/captcha.png')))
+    ocr_result = parse_captcha(Image.open( 'lib\captcha.png'))
     print(ocr_result)
     driver.find_element_by_xpath("//*[@id='captchaCheck']").send_keys(ocr_result)
     driver.find_element_by_xpath("//*[@id='captcha']").click()
@@ -44,10 +44,11 @@ def fill_form(driver,uname, passwd):
 def check_login_success(driver):
     while 'value="19BCE0984"' not in driver.page_source:
         try:
-            fill_form(driver,os.getenv('user'), os.getenv('pass'))
+            fill_form(driver,"19BCE0984", "Rohan@2001")
             return False
         except:
             print("RELOAD")
+            time.sleep(1)
             return True
         
 

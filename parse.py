@@ -1,3 +1,6 @@
+'''
+Credits: @Presto412
+'''
 
 def parse_captcha(img):
     from PIL import Image

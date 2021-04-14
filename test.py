@@ -17,7 +17,6 @@ FPATH = os.path.dirname(os.path.realpath(__file__))
 driver = webdriver.Edge('msedgedriver.exe')
 driver.get("https://vtop.vit.ac.in/vtop/initialProcess")
 
-
 def escape_timeout_page(driver):
     driver.refresh()
     driver.find_element_by_xpath("//*[@id='closedHTML']/div/div/div/div[2]/div/div/a").click()

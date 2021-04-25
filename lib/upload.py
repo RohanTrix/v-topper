@@ -39,6 +39,9 @@ def uploader(driver, class_nbr):
         print("Some error Occured! Please try again")
         return
     time.sleep(2)
+    if "Uploaded successfully" in driver.page_source:
+        print("SUCESS!")
+        return
     try:
         otp = driver.find_element_by_id("otpEmail")
         while True:

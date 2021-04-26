@@ -17,10 +17,7 @@ from dotenv import load_dotenv
 
 CAPTCHA_DIM = (180, 45)
 CHARACTER_DIM = (30, 32)
-if getattr(sys, 'frozen', False):
-    FPATH = os.path.dirname(sys.executable)
-elif __file__:
-    FPATH = os.path.dirname(os.path.realpath(__file__))
+FPATH = os.path.dirname(os.path.realpath(__file__))
 
 
 
@@ -31,7 +28,7 @@ options.add_argument('log-level=3')
 driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
 
 driver.get("https://vtop.vit.ac.in/vtop/initialProcess")
-
+os.system('cls')
 def escape_timeout_page(driver):
     driver.refresh()
     driver.find_element_by_xpath("//*[@id='closedHTML']/div/div/div/div[2]/div/div/a").click()
@@ -70,8 +67,7 @@ def check_login_success(driver):
             print("RELOAD")
             time.sleep(1)
             return True
-
-if __name__=="__main__":
+def assignment_submit():
     repeat = False
     while True:
         escape_timeout_page(driver)
@@ -84,4 +80,22 @@ if __name__=="__main__":
     time.sleep(2)
     DA_list = open_DA(driver)
     choice = int(input("Kaunsa DA submit karoge? (Choose index no.): "))
+    while not str(choice).isdigit():
+        choice = int(input("Kaunsa DA submit karoge? (Choose index no.): "))
     uploader(driver, DA_list[choice-1][1])
+
+def menu():
+    print("Choose you task: ")
+    print("1. Upload DA")
+    print("2. Download Course material")
+    task_choice = int(input())
+    if task_choice==1:
+        _ = os.system('cls')
+        assignment_submit()
+    else:
+        pass
+
+
+if __name__=="__main__":
+    os.chdir(FPATH)
+    menu()

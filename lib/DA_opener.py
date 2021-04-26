@@ -1,7 +1,9 @@
 import time
 import pandas as pd
 from selenium.webdriver.support.ui import Select, WebDriverWait
+import os
 def open_DA(driver):
+    os.system('cls')
     driver.execute_script("javascript:loadmydiv('examinations/StudentDA')")
     time.sleep(3)
     drp = Select(driver.find_element_by_id("semesterSubId"))

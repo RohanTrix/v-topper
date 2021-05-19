@@ -77,7 +77,7 @@ def assignment_submit():
             continue
         else:
             break
-    time.sleep(2)
+    time.sleep(3)
     DA_list = open_DA(driver)
     choice = int(input("Kaunsa DA submit karoge? (Choose index no.): "))
     while not str(choice).isdigit():
